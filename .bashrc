@@ -23,6 +23,7 @@ alias less='less --use-color'
 alias bashrc='source ~/.bashrc'
 alias lstime='date "+%I:%M%P"'
 alias gui='startx &> ~/.xsession.log'
+alias rebuild='sudo nixos-rebuild switch -I nixos-config=/home/user0/repos/Dev-Config/configuration.nix'
 
 # Terminal prompt
 LIGHT_BLUE="\e[1;34m"
