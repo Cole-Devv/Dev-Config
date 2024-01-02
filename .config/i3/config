@@ -1,0 +1,173 @@
+# i3wm configuration file
+
+# Modifier key(left alt)
+set $mod Mod1
+
+# Set defualt layout
+workspace_layout tabbed
+
+# Walpaper
+exec --no-startup-id feh --bg-scale ~/Pictures/woods.jpg
+
+# Border
+default_floating_border pixel 1
+default_border pixel 1
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. The 'pango:DejaVu Sans Mono 8' font is popular aswell.
+font pango:monospace 0
+
+# Kill focused window
+bindsym $mod+F4 kill
+
+# Quit i3wm
+bindsym $mod+Control+Escape exec --no-startup-id ps -aux | grep i3 | grep tty | awk '{print $2}' | xargs kill
+
+# Open alacritty
+bindsym Super_L exec alacritty
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Tab       focus right
+bindsym $mod+Shift+Tab focus left
+
+# Move windows
+bindsym $mod+Left  move left
+bindsym $mod+Down  move down
+bindsym $mod+Up    move up
+bindsym $mod+Right move right
+
+# Screen split orientations
+bindsym $mod+n split h
+bindsym $mod+m split v
+
+# Fullscreen
+bindsym $mod+space fullscreen toggle
+
+# Tile layout mode
+bindsym $mod+Shift+t layout tabbed
+bindsym $mod+Shift+s layout toggle split
+
+# Workspace names
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+# Switch workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move window to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Resize window (you can also use the mouse)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        # Vim keys
+        bindsym h resize shrink width  2 px or 2 ppt
+        bindsym j resize grow   height 2 px or 2 ppt
+        bindsym k resize shrink height 2 px or 2 ppt
+        bindsym l resize grow   width  2 px or 2 ppt
+
+        # Enter normal mode
+        bindsym Escape mode "default"
+}
+
+# Restart/reload i3
+bindsym $mod+Shift+Return restart
+
+# Border colors
+client.focused          #3cccfc #3cccfc #3cccfc #3cccfc #3cccfc
+client.focused_inactive #3cccfc #3cccfc #3cccfc #3cccfc #3cccfc 
+client.unfocused        #3cccfc #3cccfc #3cccfc #3cccfc #3cccfc 
+client.urgent           #3cccfc #3cccfc #3cccfc #3cccfc #3cccfc 
+client.placeholder      #3cccfc #3cccfc #3cccfc #3cccfc #3cccfc 
+client.background       #3cccfc
+
+#############################
+### settings for i3-gaps: ###
+#############################
+
+# Set inner/outer gaps
+#for_window [class="^.*"] border pixel 0
+gaps inner 12
+gaps outer 1
+
+# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
+# gaps inner|outer current|all set|plus|minus <px>
+# gaps inner all set 10
+# gaps outer all plus 5
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+#smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace)
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
+# smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
