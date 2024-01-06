@@ -86,6 +86,7 @@
   #  wget  
     pkgs.gcc
     pkgs.rustup
+    pkgs.wasmtime
 
     pkgs.git
     pkgs.helix
