@@ -31,8 +31,7 @@ END="\e[m"
 PS1="${LIGHT_GRAY}---${END} ${LIGHT_BLUE}\A \u${END} ${LIGHT_GRAY}\w${END}\n${LIGHT_GRAY}-----${END} "
 
 run () {
-  ${1} &>> ~/.xsession.log &
-  disown
+  ("$@" &>> ~/.xsession.log &)
 }
 
 nixos_switch () {
