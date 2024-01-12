@@ -23,7 +23,6 @@ alias less='less --use-color'
 alias bashrc='source ~/.bashrc'
 alias lstime='date "+%I:%M%P"'
 alias gui='startx &> ~/.xsession.log'
-alias rebuild='sudo nixos-rebuild switch --upgrade -I nixos-config=/home/user0/repos/Dev-Config/configuration.nix'
 
 # Terminal prompt
 LIGHT_BLUE="\e[1;34m"
@@ -36,20 +35,30 @@ run () {
   disown
 }
 
+nixos_switch () {
+  CFG=$(realpath ${1})
+  sudo nixos-rebuild switch -I nixos-config=${CFG}
+}
+
 dotfiles () {
   REPO=$(realpath -s ${1})
 
-  lnk () {
+  ln_repo_home () {
+    mkdir -p $(dirname ${HOME}/${2})
+    ln -sf ${REPO}/${1} ${HOME}/${2}
+  }
+  
+  ln_match_repo_home () {
     mkdir -p $(dirname ${HOME}/${1})
     ln -sf ${REPO}/${1} ${HOME}/${1}
   }
 
-  lnk .bashrc
-  lnk .xinitrc
-  lnk .config/helix/config.toml
-  lnk .config/i3/config
-  lnk .config/alacritty/alacritty.yml
-  lnk Pictures/woods.jpg
-
-  ln -sf ${REPO}/.bashrc ${HOME}/.bash_profile
+  ln_repo_home .bashrc .bash_profile
+  
+  ln_match_repo_home .bashrc
+  ln_match_repo_home .xinitrc
+  ln_match_repo_home .config/helix/config.toml
+  ln_match_repo_home .config/i3/config
+  ln_match_repo_home .config/alacritty/alacritty.yml
+  ln_match_repo_home Pictures/woods.jpg
 }
