@@ -91,6 +91,7 @@
     pkgs.lshw
     pkgs.zip
     pkgs.unzip
+    pkgs.unrar
 
     pkgs.feh
     pkgs.alacritty
