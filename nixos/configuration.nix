@@ -11,9 +11,17 @@
       ./optimus.nix
     ];
 
+  # Enable virtualisation
+  virtualisation.libvirtd.enable = true;
+
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    kernelModules = [ "kvm-amd" "kvm-intel" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -73,7 +81,7 @@
   users.users.user0 = {
     isNormalUser = true;
     description = "user0";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "disk" "qemu-libvirtd" "libvirtd" ];
     packages = with pkgs; [];
   };
 
